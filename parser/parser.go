@@ -2,7 +2,6 @@ package parser
 
 import (
 	"fmt"
-	"strings"
 
 	"github.com/autamus/go-parspack/pkg"
 	"github.com/autamus/go-parspack/scanner"
@@ -23,32 +22,28 @@ func (parser *Parser) Init(scnr scanner.Scanner) {
 
 // Parse decodes the information from a scanner into a package struct.
 func (parser *Parser) Parse() (result pkg.Package, err error) {
-	if !parser.scnr.hasNextLine() && !parser.scnr.hasNextOnLine() {
+	if !parser.scnr.HasNextLine() && !parser.scnr.HasNextOnLine() {
 		return parser.result, nil
 	}
 
-	token := parser.scnr.get()
+	token := parser.scnr.Get()
 
 	switch {
-	case strings.HasPrefix(token, "#") && parser.scnr.hasNextLine():
-		parser.scnr.nextLine()
+	case token.IsComment() && parser.scnr.HasNextLine():
+		parser.scnr.NextLine()
 		parser.Parse()
 
-	case strings.HasPrefix(token, `"""`):
+	case token.IsString():
 		fmt.Println("Description")
 
-	case token == "class":
-		fmt.Println("Class")
-		token = parser.scnr.get()
+	case token.IsClass():
+		err = parser.ParseClass()
 		if err != nil {
 			return result, err
 		}
-		stmt := strings.Split(strings.Trim(token, "):"), "(")
-		parser.result.Name = stmt[0]
-		parser.result.PackageType = stmt[1]
 	}
 
-	err = parser.scnr.next()
+	err = parser.scnr.Next()
 	if err != nil {
 		if err.Error() == "end of input string" {
 			return parser.result, nil

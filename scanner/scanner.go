@@ -36,17 +36,17 @@ func (scnr *Scanner) NextLine() {
 }
 
 // Get returns the current token from the scanner.
-func (scnr *Scanner) Get() (result string) {
-	return scnr.currentLine[scnr.cursor]
+func (scnr *Scanner) Get() (result Token) {
+	return Token{scnr.currentLine[scnr.cursor]}
 }
 
 // Next moves to the next token in the input text.
 func (scnr *Scanner) Next() (err error) {
 	switch {
-	case scnr.hasNextOnLine():
+	case scnr.HasNextOnLine():
 		scnr.cursor++
 
-	case scnr.hasNextLine():
+	case scnr.HasNextLine():
 		scnr.NextLine()
 
 	default:
@@ -55,11 +55,12 @@ func (scnr *Scanner) Next() (err error) {
 	return nil
 }
 
-
+// HasNextOnLine returns if the scanner contains another token on the same line.
 func (scnr *Scanner) HasNextOnLine() bool {
 	return scnr.cursor < len(scnr.currentLine)
 }
 
+// HasNextLine returns if the scanner contains another line of data.
 func (scnr *Scanner) HasNextLine() bool {
 	return scnr.lineIndex < len(scnr.lines)
 }
