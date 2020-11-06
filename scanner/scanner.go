@@ -2,6 +2,7 @@ package scanner
 
 import (
 	"errors"
+	"fmt"
 	"strings"
 )
 
@@ -20,7 +21,7 @@ func (scnr *Scanner) Init(input string) {
 	scnr.cursor = 0
 
 	scnr.lines = strings.Split(input, "\n")
-	scnr.currentLine = strings.Fields(scnr.lines[scnr.lineIndex])
+	scnr.NextLine()
 }
 
 // NextLine sets the cursor to the beginning of the next line.
@@ -31,8 +32,9 @@ func (scnr *Scanner) NextLine() {
 	scnr.currentLine = strings.Fields(scnr.lines[scnr.lineIndex])
 
 	if len(scnr.currentLine) == 0 {
-		scnr.NextLine()
+		scnr.Next()
 	}
+	fmt.Println(scnr.lineIndex)
 }
 
 // Get returns the current token from the scanner.
@@ -57,10 +59,17 @@ func (scnr *Scanner) Next() (err error) {
 
 // HasNextOnLine returns if the scanner contains another token on the same line.
 func (scnr *Scanner) HasNextOnLine() bool {
-	return scnr.cursor < len(scnr.currentLine)
+	return scnr.cursor < len(scnr.currentLine)-1
 }
 
 // HasNextLine returns if the scanner contains another line of data.
 func (scnr *Scanner) HasNextLine() bool {
-	return scnr.lineIndex < len(scnr.lines)
+	if scnr.lineIndex < len(scnr.lines)-1 {
+		for _, line := range scnr.lines {
+			if len(strings.Fields(line)) > 0 {
+				return true
+			}
+		}
+	}
+	return false
 }

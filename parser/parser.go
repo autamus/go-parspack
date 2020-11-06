@@ -1,8 +1,6 @@
 package parser
 
 import (
-	"fmt"
-
 	"github.com/autamus/go-parspack/pkg"
 	"github.com/autamus/go-parspack/scanner"
 )
@@ -32,9 +30,6 @@ func (parser *Parser) Parse() (result pkg.Package, err error) {
 	case token.IsComment() && parser.scnr.HasNextLine():
 		parser.scnr.NextLine()
 		parser.Parse()
-
-	case token.IsString():
-		fmt.Println("Description")
 
 	case token.IsClass():
 		err = parser.ParseClass()

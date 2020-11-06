@@ -3,7 +3,6 @@ package parser
 import (
 	"errors"
 	"fmt"
-	"strings"
 )
 
 // ParseClass handles the specific parsing of a package class.
@@ -22,9 +21,6 @@ func (parser *Parser) ParseClass() (err error) {
 	}
 
 	fmt.Println("Class")
-	stmt := strings.Split(strings.Trim(token.Data, "):"), "(")
-	parser.result.Name = stmt[0]
-	parser.result.PackageType = stmt[1]
 
 	return nil
 }
