@@ -9,41 +9,38 @@ import (
 // a package struct.
 type Parser struct {
 	scnr   scanner.Scanner
-	result pkg.Package
-}
-
-// Init initializes a Parser with a scanner.
-func (parser *Parser) Init(scnr scanner.Scanner) {
-	parser.scnr = scnr
-	parser.result = pkg.Package{}
+	result *pkg.Package
 }
 
 // Parse decodes the information from a scanner into a package struct.
-func (parser *Parser) Parse() (result pkg.Package, err error) {
-	if !parser.scnr.HasNextLine() && !parser.scnr.HasNextOnLine() {
-		return parser.result, nil
-	}
+func (parser *Parser) Parse(scnr scanner.Scanner, result *pkg.Package) (err error) {
+	parser.scnr = scnr
+	parser.result = result
 
-	token := parser.scnr.Get()
+	for {
+		token := parser.scnr.Peak()
 
-	switch {
-	case token.IsComment() && parser.scnr.HasNextLine():
-		parser.scnr.NextLine()
-		parser.Parse()
+		switch {
+		case token.IsComment():
+			parser.scnr.NextLine()
+			continue
 
-	case token.IsClass():
-		err = parser.ParseClass()
+		case token.IsClass():
+			err = parser.ParseClass()
+			if err != nil {
+				if err.Error() == "end of scanner source" {
+					return nil
+				}
+				return err
+			}
+		}
+
+		err = parser.scnr.Next()
 		if err != nil {
-			return result, err
+			if err.Error() == "end of scanner source" {
+				return nil
+			}
+			return err
 		}
 	}
-
-	err = parser.scnr.Next()
-	if err != nil {
-		if err.Error() == "end of input string" {
-			return parser.result, nil
-		}
-		return parser.result, err
-	}
-	return parser.Parse()
 }

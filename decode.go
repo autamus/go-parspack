@@ -13,8 +13,8 @@ func Decode(spack string) (result pkg.Package, err error) {
 	scnr := scanner.Scanner{}
 	parsr := parser.Parser{}
 	scnr.Init(spack)
-	parsr.Init(scnr)
-	result, err = parsr.Parse()
+
+	err = parsr.Parse(scnr, &result)
 	if err != nil {
 		return result, err
 	}

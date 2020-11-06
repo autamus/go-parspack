@@ -1,13 +1,15 @@
 package parspack
 
 import (
-	"fmt"
+	"errors"
 	"log"
 	"testing"
+
+	"github.com/autamus/go-parspack/pkg"
 )
 
 func TestDecode(t *testing.T) {
-	pkg, err := Decode(`
+	result, err := Decode(`
 	# Copyright 2013-2020 Lawrence Livermore National Security, LLC and other
 	# Spack Project Developers. See the top-level COPYRIGHT file for details.
 	#
@@ -45,5 +47,16 @@ func TestDecode(t *testing.T) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(pkg)
+
+	expected := pkg.Package{
+		Name:        "Beast2",
+		PackageType: "Package",
+	}
+
+	if result.Name != expected.Name {
+		t.Error(errors.New("result package name doesn't match expected"))
+	}
+	if result.PackageType == expected.PackageType {
+		t.Error(errors.New("result package type doesn't match expected"))
+	}
 }

@@ -2,7 +2,6 @@ package scanner
 
 import (
 	"errors"
-	"fmt"
 	"strings"
 )
 
@@ -15,61 +14,47 @@ type Scanner struct {
 	cursor      int
 }
 
-// Init initializes the scanner with the given input string.
-func (scnr *Scanner) Init(input string) {
-	scnr.lineIndex = 0
-	scnr.cursor = 0
-
-	scnr.lines = strings.Split(input, "\n")
-	scnr.NextLine()
+// Init instantiates a new scanner with the input text.
+func (s *Scanner) Init(input string) {
+	s.lines = strings.Split(input, "\n")
+	s.lineIndex = -1
+	s.NextLine()
 }
 
-// NextLine sets the cursor to the beginning of the next line.
-func (scnr *Scanner) NextLine() {
-	scnr.cursor = 0
-	scnr.lineIndex++
-
-	scnr.currentLine = strings.Fields(scnr.lines[scnr.lineIndex])
-
-	if len(scnr.currentLine) == 0 {
-		scnr.Next()
-	}
-	fmt.Println(scnr.lineIndex)
-}
-
-// Get returns the current token from the scanner.
-func (scnr *Scanner) Get() (result Token) {
-	return Token{scnr.currentLine[scnr.cursor]}
-}
-
-// Next moves to the next token in the input text.
-func (scnr *Scanner) Next() (err error) {
+// Next moves the cursor to the next token.
+func (s *Scanner) Next() (err error) {
 	switch {
-	case scnr.HasNextOnLine():
-		scnr.cursor++
+	case s.cursor < len(s.currentLine)-1:
+		s.cursor++
 
-	case scnr.HasNextLine():
-		scnr.NextLine()
+	case s.lineIndex < len(s.lines)-1:
+		err = s.NextLine()
 
 	default:
-		return errors.New("end of input string")
+		err = errors.New("end of scanner source")
+	}
+	return err
+}
+
+// NextLine moves the cursor to the next line if possible.
+func (s *Scanner) NextLine() (err error) {
+	var i int
+	for i = s.lineIndex + 1; i < len(s.lines); i++ {
+		line := strings.Fields(s.lines[i])
+		if len(line) > 0 {
+			s.lineIndex = i
+			s.currentLine = line
+			s.cursor = 0
+			break
+		}
+	}
+	if i >= len(s.lines) {
+		return errors.New("end of scanner source")
 	}
 	return nil
 }
 
-// HasNextOnLine returns if the scanner contains another token on the same line.
-func (scnr *Scanner) HasNextOnLine() bool {
-	return scnr.cursor < len(scnr.currentLine)-1
-}
-
-// HasNextLine returns if the scanner contains another line of data.
-func (scnr *Scanner) HasNextLine() bool {
-	if scnr.lineIndex < len(scnr.lines)-1 {
-		for _, line := range scnr.lines {
-			if len(strings.Fields(line)) > 0 {
-				return true
-			}
-		}
-	}
-	return false
+// Peak grabs the current token.
+func (s *Scanner) Peak() (result Token) {
+	return Token{Data: s.currentLine[s.cursor]}
 }
