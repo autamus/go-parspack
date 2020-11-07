@@ -7,6 +7,8 @@ import (
 // Package is the internal struct representation of the Spack Package Spec.
 type Package struct {
 	Name              string
+	Description       string
+	BlockComment      string
 	Homepage          string
 	URL               string
 	PackageType       string

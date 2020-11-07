@@ -55,6 +55,11 @@ func (s *Scanner) NextLine() (err error) {
 }
 
 // Peak grabs the current token.
-func (s *Scanner) Peak() (result Token) {
+func (s *Scanner) Peak() Token {
 	return Token{Data: s.currentLine[s.cursor]}
+}
+
+// PeakLine grabs the current active line in the scanner.
+func (s *Scanner) PeakLine() string {
+	return s.lines[s.lineIndex]
 }

@@ -13,20 +13,30 @@ type Parser struct {
 }
 
 // Parse decodes the information from a scanner into a package struct.
-func (parser *Parser) Parse(scnr scanner.Scanner, result *pkg.Package) (err error) {
-	parser.scnr = scnr
-	parser.result = result
+func (p *Parser) Parse(scnr scanner.Scanner, result *pkg.Package) (err error) {
+	p.scnr = scnr
+	p.result = result
+
+	// Parse Beginning Block Comment.
+	for {
+		token := p.scnr.Peak()
+		if !token.IsComment() {
+			break
+		}
+		p.result.BlockComment = p.result.BlockComment + p.scnr.PeakLine() + "\n"
+		p.scnr.NextLine()
+	}
 
 	for {
-		token := parser.scnr.Peak()
+		token := p.scnr.Peak()
 
 		switch {
 		case token.IsComment():
-			parser.scnr.NextLine()
+			p.scnr.NextLine()
 			continue
 
 		case token.IsClass():
-			err = parser.ParseClass()
+			err = p.ParseClass()
 			if err != nil {
 				if err.Error() == "end of scanner source" {
 					return nil
@@ -35,7 +45,7 @@ func (parser *Parser) Parse(scnr scanner.Scanner, result *pkg.Package) (err erro
 			}
 		}
 
-		err = parser.scnr.Next()
+		err = p.scnr.Next()
 		if err != nil {
 			if err.Error() == "end of scanner source" {
 				return nil

@@ -21,6 +21,24 @@ func (p *Parser) ParseClass() (err error) {
 		return err
 	}
 
+	err = p.scnr.NextLine()
+	if err != nil {
+		return err
+	}
+
+	for {
+		token := p.scnr.Peak()
+
+		switch {
+		case token.IsString():
+			p.result.Description, err = p.ParseString()
+			if err != nil {
+				return err
+			}
+
+		}
+	}
+
 	return nil
 }
 
