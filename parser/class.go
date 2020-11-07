@@ -37,9 +37,13 @@ func (p *Parser) ParseClass() (err error) {
 			}
 
 		}
-	}
 
-	return nil
+		err = p.scnr.Next()
+		if err != nil {
+			break
+		}
+	}
+	return err
 }
 
 // ParseClassName take care of parsing the name of a package.
