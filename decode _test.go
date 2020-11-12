@@ -51,12 +51,16 @@ func TestDecode(t *testing.T) {
 	expected := pkg.Package{
 		Name:        "Beast2",
 		PackageType: "Package",
+		Description: `BEAST is a cross-platform program for Bayesian inference using MCMC of molecular sequences. It is entirely orientated towards rooted, time-measured phylogenies inferred using strict or relaxed molecular clock models. It can be used as a method of reconstructing phylogenies but is also a framework for testing evolutionary hypotheses without conditioning on a single tree topology.`,
 	}
 
 	if result.Name != expected.Name {
 		t.Error(errors.New("result package name doesn't match expected"))
 	}
-	if result.PackageType == expected.PackageType {
+	if result.PackageType != expected.PackageType {
 		t.Error(errors.New("result package type doesn't match expected"))
+	}
+	if result.Description != expected.Description {
+		t.Error(errors.New("result package description doesn't match expected"))
 	}
 }

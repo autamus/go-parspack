@@ -22,18 +22,20 @@ func (s *Scanner) Init(input string) {
 }
 
 // Next moves the cursor to the next token.
-func (s *Scanner) Next() (err error) {
+func (s *Scanner) Next() (token Token, err error) {
 	switch {
 	case s.cursor < len(s.currentLine)-1:
 		s.cursor++
+		token = s.Peak()
 
 	case s.lineIndex < len(s.lines)-1:
 		err = s.NextLine()
+		token = s.Peak()
 
 	default:
 		err = errors.New("end of scanner source")
 	}
-	return err
+	return token, err
 }
 
 // NextLine moves the cursor to the next line if possible.

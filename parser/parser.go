@@ -45,7 +45,7 @@ func (p *Parser) Parse(scnr scanner.Scanner, result *pkg.Package) (err error) {
 			}
 		}
 
-		err = p.scnr.Next()
+		_, err = p.scnr.Next()
 		if err != nil {
 			if err.Error() == "end of scanner source" {
 				return nil

@@ -16,7 +16,10 @@ func (t *Token) IsComment() bool {
 func (t *Token) IsString() bool {
 	return strings.HasPrefix(t.Data, `"""`) ||
 		strings.HasPrefix(t.Data, `"`) ||
-		strings.HasPrefix(t.Data, `'`)
+		strings.HasPrefix(t.Data, `'`) ||
+		strings.HasSuffix(t.Data, `"""`) ||
+		strings.HasSuffix(t.Data, `"`) ||
+		strings.HasSuffix(t.Data, `'`)
 }
 
 // IsClass returns if the current token is begins a class definition.
