@@ -26,13 +26,26 @@ func (p *Parser) ParseClass() (err error) {
 		return err
 	}
 
-	p.result.Description, err = p.ParseString()
-	if err != nil {
-		return err
-	}
-
 	for {
-		// token := p.scnr.Peak()
+		token := p.scnr.Peak()
+
+		switch {
+		case strings.HasPrefix(token.Data, `"""`):
+			p.result.Description, err = p.ParseString()
+
+		case token.IsHomepage():
+			p.result.Homepage, err = p.ParseHomepage()
+
+			// case token.IsURL():
+			// 	p.result.URL, err = p.ParseURL()
+
+			// case token.IsVersion():
+			// 	append(p.result.Versions, p.ParseVersion())
+		}
+
+		if err != nil {
+			return err
+		}
 
 		_, err = p.scnr.Next()
 		if err != nil {

@@ -26,3 +26,8 @@ func (t *Token) IsString() bool {
 func (t *Token) IsClass() bool {
 	return strings.ToLower(t.Data) == "class"
 }
+
+// IsHomepage returns if the current token begins with a homepage variable declaration.
+func (t *Token) IsHomepage() bool {
+	return strings.ToLower(t.Data) == "homepage"
+}

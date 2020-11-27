@@ -12,27 +12,33 @@ func (p *Parser) ParseString() (result string, err error) {
 		return result, errors.New("called ParseString without the beginning token being a string start")
 	}
 
-	result = trimString(token.Data)
+	token.Data = trimStringPrefix(token.Data)
 
 	for {
+		if token.IsString() {
+			result += trimStringSuffix(token.Data)
+			break
+		}
+
+		result += token.Data + " "
+
 		token, err = p.scnr.Next()
 		if err != nil {
 			return result, err
 		}
-
-		if token.IsString() {
-			result += " " + trimString(token.Data)
-			break
-		}
-
-		result += " " + token.Data
 	}
 
 	return result, err
 }
 
-func trimString(token string) string {
-	return strings.TrimFunc(token, func(input rune) bool {
+func trimStringPrefix(token string) string {
+	return strings.TrimLeftFunc(token, func(input rune) bool {
+		return input == '"' || input == '`' || input == '\''
+	})
+}
+
+func trimStringSuffix(token string) string {
+	return strings.TrimRightFunc(token, func(input rune) bool {
 		return input == '"' || input == '`' || input == '\''
 	})
 }
