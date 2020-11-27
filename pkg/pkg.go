@@ -1,9 +1,5 @@
 package pkg
 
-import (
-	"github.com/DataDrake/cuppa/version"
-)
-
 // Package is the internal struct representation of the Spack Package Spec.
 type Package struct {
 	Name              string
@@ -13,7 +9,7 @@ type Package struct {
 	URL               string
 	PackageType       string
 	Dependencies      []string
-	LatestVersion     version.Version
-	Versions          []version.Version
+	LatestVersion     Version
+	Versions          []Version
 	BuildInstructions string
 }

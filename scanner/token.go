@@ -31,3 +31,13 @@ func (t *Token) IsClass() bool {
 func (t *Token) IsHomepage() bool {
 	return strings.ToLower(t.Data) == "homepage"
 }
+
+// IsURL returns if the current token begins with a valid URL header.
+func (t *Token) IsURL() bool {
+	return strings.ToLower(t.Data) == "url"
+}
+
+// IsVersion returns if the current token begins with a valid version header.
+func (t *Token) IsVersion() bool {
+	return strings.HasPrefix(strings.ToLower(t.Data), "version(")
+}

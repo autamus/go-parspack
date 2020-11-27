@@ -36,11 +36,15 @@ func (p *Parser) ParseClass() (err error) {
 		case token.IsHomepage():
 			p.result.Homepage, err = p.ParseHomepage()
 
-			// case token.IsURL():
-			// 	p.result.URL, err = p.ParseURL()
+		case token.IsURL():
+			p.result.URL, err = p.ParseURL()
 
-			// case token.IsVersion():
-			// 	append(p.result.Versions, p.ParseVersion())
+		case token.IsVersion():
+			version, err := p.ParseVersion()
+			if err != nil {
+				return err
+			}
+			p.result.Versions = append(p.result.Versions, version)
 		}
 
 		if err != nil {

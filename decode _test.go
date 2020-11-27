@@ -5,6 +5,8 @@ import (
 	"log"
 	"testing"
 
+	"github.com/DataDrake/cuppa/version"
+
 	"github.com/autamus/go-parspack/pkg"
 )
 
@@ -53,6 +55,9 @@ func TestDecode(t *testing.T) {
 		PackageType: "Package",
 		Description: `BEAST is a cross-platform program for Bayesian inference using MCMC of molecular sequences. It is entirely orientated towards rooted, time-measured phylogenies inferred using strict or relaxed molecular clock models. It can be used as a method of reconstructing phylogenies but is also a framework for testing evolutionary hypotheses without conditioning on a single tree topology.`,
 		Homepage:    "http://beast2.org/",
+		URL:         "https://github.com/CompEvol/beast2/releases/download/v2.4.6/BEAST.v2.4.6.Linux.tgz",
+		Versions: []pkg.Version{pkg.Version{Value: version.NewVersion("2.5.2"), Checksum: "sha256='2feb2281b4f7cf8f7de1a62de50f52a8678ed0767fc72f2322e77dde9b8cd45f'"},
+			pkg.Version{Value: version.NewVersion("2.4.6"), Checksum: "sha256='84029c5680cc22f95bef644824130090f5f12d3d7f48d45cb4efc8e1d6b75e93'"}},
 	}
 
 	if result.Name != expected.Name {
@@ -65,7 +70,21 @@ func TestDecode(t *testing.T) {
 		t.Error(errors.New("result package description doesn't match expected"))
 	}
 	if result.Homepage != expected.Homepage {
-		t.Log(result.Homepage)
 		t.Error(errors.New("result package homepage doesn't match expected"))
+	}
+	if result.URL != expected.URL {
+		t.Error(errors.New("result package URL doesn't match expected"))
+	}
+	if len(result.Versions) != len(expected.Versions) {
+		t.Error(errors.New("result package Versions doesn't match expected"))
+	} else {
+		for i := range result.Versions {
+			if result.Versions[i].Compare(expected.Versions[i]) != 0 {
+				t.Error(errors.New("result package Versions doesn't match expected"))
+			}
+			if result.Versions[i].Checksum != expected.Versions[i].Checksum {
+				t.Error(errors.New("result package Versions doesn't match expected"))
+			}
+		}
 	}
 }
