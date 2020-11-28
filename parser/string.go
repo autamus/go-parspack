@@ -42,3 +42,9 @@ func trimStringSuffix(token string) string {
 		return input == '"' || input == '`' || input == '\''
 	})
 }
+
+func trimString(token string) string {
+	return strings.TrimFunc(token, func(input rune) bool {
+		return input == '"' || input == '`' || input == '\''
+	})
+}

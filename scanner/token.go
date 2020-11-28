@@ -41,3 +41,8 @@ func (t *Token) IsURL() bool {
 func (t *Token) IsVersion() bool {
 	return strings.HasPrefix(strings.ToLower(t.Data), "version(")
 }
+
+// IsDependency returns if the current token begins with a valid version header.
+func (t *Token) IsDependency() bool {
+	return strings.HasPrefix(strings.ToLower(t.Data), "depends_on(")
+}
