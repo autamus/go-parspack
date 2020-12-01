@@ -65,3 +65,9 @@ func (s *Scanner) Peak() Token {
 func (s *Scanner) PeakLine() string {
 	return s.lines[s.lineIndex]
 }
+
+// GetIndentLevel returns the level of indentation for a line.
+func (s *Scanner) GetIndentLevel() int {
+	line := s.PeakLine()
+	return strings.Count(line, string(line[0]))
+}

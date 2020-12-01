@@ -51,6 +51,14 @@ func (p *Parser) ParseClass() (err error) {
 
 		case token.IsDependency():
 			p.result.Dependencies, err = p.ParseDependencies()
+
+		case token.IsFunction():
+			result, err := p.ParseFunction()
+			p.result.BuildInstructions += result
+			if err != nil {
+				return err
+			}
+			continue
 		}
 
 		if err != nil {

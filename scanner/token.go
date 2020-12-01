@@ -46,3 +46,8 @@ func (t *Token) IsVersion() bool {
 func (t *Token) IsDependency() bool {
 	return strings.HasPrefix(strings.ToLower(t.Data), "depends_on(")
 }
+
+// IsFunction returns if the current token begins a function.
+func (t *Token) IsFunction() bool {
+	return strings.ToLower(t.Data) == "def"
+}

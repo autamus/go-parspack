@@ -60,6 +60,16 @@ func TestDecode(t *testing.T) {
 			pkg.Version{Value: version.NewVersion("2.4.6"), Checksum: "sha256='84029c5680cc22f95bef644824130090f5f12d3d7f48d45cb4efc8e1d6b75e93'"}},
 		LatestVersion: pkg.Version{Value: version.NewVersion("2.5.2"), Checksum: "sha256='2feb2281b4f7cf8f7de1a62de50f52a8678ed0767fc72f2322e77dde9b8cd45f'"},
 		Dependencies:  []string{"java"},
+		BuildInstructions: `		def setup_run_environment(self, env):
+			env.set('BEAST', self.prefix)
+
+		def install(self, spec, prefix):
+			install_tree('bin', prefix.bin)
+			install_tree('examples', join_path(self.prefix, 'examples'))
+			install_tree('images', join_path(self.prefix, 'images'))
+			install_tree('lib', prefix.lib)
+			install_tree('templates', join_path(self.prefix, 'templates'))
+`,
 	}
 
 	if result.Name != expected.Name {
@@ -100,5 +110,10 @@ func TestDecode(t *testing.T) {
 				t.Error(errors.New("result package Dependencies don't match expected"))
 			}
 		}
+	}
+	if result.BuildInstructions != expected.BuildInstructions {
+		t.Log(result.BuildInstructions)
+		t.Log(expected.BuildInstructions)
+		t.Error(errors.New("result package build instructions don't match expected"))
 	}
 }
