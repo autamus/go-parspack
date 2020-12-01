@@ -44,10 +44,7 @@ func (p *Parser) ParseClass() (err error) {
 			if err != nil {
 				return err
 			}
-			p.result.Versions = append(p.result.Versions, version)
-			if p.result.LatestVersion.Checksum == "" || p.result.LatestVersion.Compare(version) < 0 {
-				p.result.LatestVersion = version
-			}
+			p.result.AddVersion(version)
 
 		case token.IsDependency():
 			p.result.Dependencies, err = p.ParseDependencies()

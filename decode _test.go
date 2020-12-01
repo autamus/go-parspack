@@ -51,6 +51,11 @@ func TestDecode(t *testing.T) {
 	}
 
 	expected := pkg.Package{
+		BlockComment: `	# Copyright 2013-2020 Lawrence Livermore National Security, LLC and other
+	# Spack Project Developers. See the top-level COPYRIGHT file for details.
+	#
+	# SPDX-License-Identifier: (Apache-2.0 OR MIT)
+`,
 		Name:        "Beast2",
 		PackageType: "Package",
 		Description: `BEAST is a cross-platform program for Bayesian inference using MCMC of molecular sequences. It is entirely orientated towards rooted, time-measured phylogenies inferred using strict or relaxed molecular clock models. It can be used as a method of reconstructing phylogenies but is also a framework for testing evolutionary hypotheses without conditioning on a single tree topology.`,
@@ -70,6 +75,12 @@ func TestDecode(t *testing.T) {
 			install_tree('lib', prefix.lib)
 			install_tree('templates', join_path(self.prefix, 'templates'))
 `,
+	}
+
+	if result.BlockComment != expected.BlockComment {
+		t.Log(result.BlockComment)
+		t.Log(expected.BlockComment)
+		t.Error(errors.New("result package block comment doesn't match expected"))
 	}
 
 	if result.Name != expected.Name {
