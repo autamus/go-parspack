@@ -110,7 +110,7 @@ func TestDecode(t *testing.T) {
 			}
 		}
 	}
-	if result.LatestVersion.Compare(expected.LatestVersion) == 0 {
+	if result.LatestVersion.Compare(expected.LatestVersion) != 0 {
 		t.Error(errors.New("result package LatestVersion doesn't match expected"))
 	}
 	if len(result.Dependencies) != len(expected.Dependencies) {
