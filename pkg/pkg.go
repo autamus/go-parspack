@@ -19,7 +19,7 @@ type Package struct {
 func (p *Package) AddVersion(input Version) {
 	if !p.contains(input) {
 		p.Versions = append(p.Versions, input)
-		if p.LatestVersion.Checksum == "" || p.LatestVersion.Compare(input) < 0 {
+		if p.LatestVersion.Value == nil || p.LatestVersion.Compare(input) < 0 {
 			p.LatestVersion = input
 		}
 	}
