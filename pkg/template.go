@@ -18,5 +18,5 @@ class {{.Name}}({{.PackageType}}):
 	{{end}}
 	{{range $_, $entry := .Dependencies}}depends_on('{{$entry}}'){{end}}
 
-	{{.BuildInstructions}}
+{{.BuildInstructions}}
 	`
