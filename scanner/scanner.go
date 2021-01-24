@@ -71,3 +71,8 @@ func (s *Scanner) GetIndentLevel() int {
 	line := s.PeakLine()
 	return strings.Count(line, string(line[0]))
 }
+
+// SetToken sets the token equal to the input string.
+func (s *Scanner) SetToken(input string) {
+	s.currentLine[s.cursor] = input
+}

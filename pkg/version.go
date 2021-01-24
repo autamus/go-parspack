@@ -6,6 +6,7 @@ import "github.com/DataDrake/cuppa/version"
 type Version struct {
 	Value    version.Version
 	Checksum string
+	URL      string
 }
 
 // Compare checks a version against another and returns

@@ -34,7 +34,12 @@ func (t *Token) IsHomepage() bool {
 
 // IsURL returns if the current token begins with a valid URL header.
 func (t *Token) IsURL() bool {
-	return strings.ToLower(t.Data) == "url"
+	return strings.HasPrefix(strings.ToLower(t.Data), "url")
+}
+
+//IsChecksum returns uf the current token begins with a valid checksum header.
+func (t *Token) IsChecksum() bool {
+	return strings.HasPrefix(strings.ToLower(t.Data), "sha")
 }
 
 // IsVersion returns if the current token begins with a valid version header.

@@ -1,6 +1,9 @@
 package parser
 
-import "errors"
+import (
+	"errors"
+	"strings"
+)
 
 // ParseURL returns the value of the url variable.
 func (p *Parser) ParseURL() (result string, err error) {
@@ -9,18 +12,23 @@ func (p *Parser) ParseURL() (result string, err error) {
 		return result, errors.New("called ParseURL without the beginning token being a URL declaration")
 	}
 
-	prev := token
-	token, err = p.scnr.Next()
-	if err != nil {
-		return result, err
-	}
-	if token.Data != "=" {
-		return result, errors.New("expecting '=' after" + prev.Data)
-	}
+	if strings.HasPrefix(strings.ToLower(token.Data), "url=") {
+		token.Data = strings.SplitN(token.Data, "=", 2)[1]
+		p.scnr.SetToken(token.Data)
+	} else {
+		prev := token
+		token, err = p.scnr.Next()
+		if err != nil {
+			return result, err
+		}
+		if token.Data != "=" {
+			return result, errors.New("expecting '=' after" + prev.Data)
+		}
 
-	token, err = p.scnr.Next()
-	if err != nil {
-		return result, err
+		token, err = p.scnr.Next()
+		if err != nil {
+			return result, err
+		}
 	}
 	return p.ParseString()
 }
