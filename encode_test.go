@@ -19,7 +19,7 @@ func TestEncode(t *testing.T) {
 		Homepage:    "http://beast2.org/",
 		URL:         "https://github.com/CompEvol/beast2/releases/download/v2.4.6/BEAST.v2.4.6.Linux.tgz",
 		Versions: []pkg.Version{pkg.Version{Value: version.NewVersion("2.5.2"), Checksum: "sha256='2feb2281b4f7cf8f7de1a62de50f52a8678ed0767fc72f2322e77dde9b8cd45f'"},
-			pkg.Version{Value: version.NewVersion("2.4.6"), Checksum: "sha256='84029c5680cc22f95bef644824130090f5f12d3d7f48d45cb4efc8e1d6b75e93'"}},
+			pkg.Version{Value: version.NewVersion("2.4.6"), Checksum: "sha256='84029c5680cc22f95bef644824130090f5f12d3d7f48d45cb4efc8e1d6b75e93'", URL: "https://github.com/CompEvol/beast2/releases/download/v2.4.6/BEAST.v2.4.6.Linux.tgz"}},
 		LatestVersion: pkg.Version{Value: version.NewVersion("2.5.2"), Checksum: "sha256='2feb2281b4f7cf8f7de1a62de50f52a8678ed0767fc72f2322e77dde9b8cd45f'"},
 		Dependencies:  []string{"java"},
 		BuildInstructions: `def setup_run_environment(self, env):
@@ -49,7 +49,7 @@ class Beast2(Package):
 	url      = "https://github.com/CompEvol/beast2/releases/download/v2.4.6/BEAST.v2.4.6.Linux.tgz"
 
 	version('2.5.2', sha256='2feb2281b4f7cf8f7de1a62de50f52a8678ed0767fc72f2322e77dde9b8cd45f')
-	version('2.4.6', sha256='84029c5680cc22f95bef644824130090f5f12d3d7f48d45cb4efc8e1d6b75e93')
+	version('2.4.6', sha256='84029c5680cc22f95bef644824130090f5f12d3d7f48d45cb4efc8e1d6b75e93', url='https://github.com/CompEvol/beast2/releases/download/v2.4.6/BEAST.v2.4.6.Linux.tgz')
 
 	depends_on('java')
 

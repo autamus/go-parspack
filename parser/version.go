@@ -20,12 +20,34 @@ func (p *Parser) ParseVersion() (result pkg.Version, err error) {
 	value := strings.TrimSuffix(noprefix, "',")
 	result.Value = version.NewVersion(value)
 
-	// Parse Checksum
-	token, err = p.scnr.Next()
-	if err != nil {
-		return result, err
+	end := false
+	for !end {
+		token, err = p.scnr.Next()
+		if err != nil {
+			return result, err
+		}
+
+		if strings.HasSuffix(token.Data, ")") {
+			end = true
+			token.Data = strings.TrimSuffix(token.Data, ")")
+		} else {
+			token.Data = strings.TrimSuffix(token.Data, ",")
+		}
+		p.scnr.SetToken(token.Data)
+
+		switch {
+		case token.IsChecksum():
+			// Parse Checksum
+			result.Checksum = token.Data
+			break
+		case token.IsURL():
+			result.URL, err = p.ParseURL()
+			if err != nil {
+				return result, err
+			}
+			break
+		}
 	}
-	result.Checksum = strings.TrimSuffix(token.Data, ")")
 
 	return result, nil
 }
