@@ -1,8 +1,8 @@
 cloud.google.com/go v0.26.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMTw=
 github.com/BurntSushi/toml v0.3.0/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/DataDrake/cli-ng v1.0.1/go.mod h1:Aoox7SvpXij+QCcXbMhZt1Bad/NeQH+Z7ItlyKA1btE=
-github.com/DataDrake/cuppa v1.1.0 h1:pprgRVRPZEEKHW54qA8l98IK3W0rsXhZyD9Xpb3+L8M=
-github.com/DataDrake/cuppa v1.1.0/go.mod h1:a7qdw2LQhlMZrUZKEp7GEuLd+vS051qN2K2EYutn3PQ=
+github.com/alecbcs/cuppa v1.1.0 h1:pprgRVRPZEEKHW54qA8l98IK3W0rsXhZyD9Xpb3+L8M=
+github.com/alecbcs/cuppa v1.1.0/go.mod h1:a7qdw2LQhlMZrUZKEp7GEuLd+vS051qN2K2EYutn3PQ=
 github.com/DataDrake/waterlog v1.0.5/go.mod h1:LUv2H3zT/FSN3SNoK/acxHKEaRjI6d+Sio85BfxNOG8=
 github.com/Masterminds/semver v1.4.2/go.mod h1:MB6lktGJrhw8PrUyiEoblNEGEQ+RzHPF078ddwwvV3Y=
 github.com/Masterminds/vcs v1.12.0/go.mod h1:N09YCmOQr6RLxC6UNHzuVwAdodYbbnycGHSmwVJjcKA=

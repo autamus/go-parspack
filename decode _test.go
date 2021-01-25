@@ -5,7 +5,7 @@ import (
 	"log"
 	"testing"
 
-	"github.com/DataDrake/cuppa/version"
+	"github.com/alecbcs/cuppa/version"
 
 	"github.com/autamus/go-parspack/pkg"
 )

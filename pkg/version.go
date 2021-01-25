@@ -3,7 +3,7 @@ package pkg
 import (
 	"sort"
 
-	"github.com/DataDrake/cuppa/version"
+	"github.com/alecbcs/cuppa/version"
 )
 
 // Version is the internal struct representation of the Spack Package Version
