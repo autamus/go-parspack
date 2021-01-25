@@ -9,14 +9,14 @@ from spack import *
 
 
 class {{.Name}}({{.PackageType}}):
-	"""{{.Description}}"""
+    """{{.Description}}"""
 
-	homepage = "{{.Homepage}}"
-	{{if .URL}}url      = "{{.URL}}"{{end}}
+    homepage = "{{.Homepage}}"
+    {{if .URL}}url      = "{{.URL}}"{{end}}
 
-{{range $_, $entry := .Versions}}	version('{{printVersion $entry}}', {{$entry.Checksum}}{{if $entry.URL}}, url='{{$entry.URL}}'{{end}})
+{{range $_, $entry := .Versions}}    version('{{printVersion $entry}}', {{$entry.Checksum}}{{if $entry.URL}}, url='{{$entry.URL}}'{{end}})
 {{end}}
-	{{range $_, $entry := .Dependencies}}depends_on('{{$entry}}'){{end}}
-
+{{range $_, $entry := .Dependencies}}    depends_on('{{$entry}}')
+{{end}}
 {{.BuildInstructions}}
 `
