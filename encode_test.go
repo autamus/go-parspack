@@ -22,7 +22,7 @@ func TestEncode(t *testing.T) {
 			pkg.Version{Value: version.NewVersion("2.4.6"), Checksum: "sha256='84029c5680cc22f95bef644824130090f5f12d3d7f48d45cb4efc8e1d6b75e93'", URL: "https://github.com/CompEvol/beast2/releases/download/v2.4.6/BEAST.v2.4.6.Linux.tgz"}},
 		LatestVersion: pkg.Version{Value: version.NewVersion("2.5.2"), Checksum: "sha256='2feb2281b4f7cf8f7de1a62de50f52a8678ed0767fc72f2322e77dde9b8cd45f'"},
 		Dependencies:  []string{"java"},
-		BuildInstructions: `def setup_run_environment(self, env):
+		BuildInstructions: `	def setup_run_environment(self, env):
 		env.set('BEAST', self.prefix)
 
 	def install(self, spec, prefix):
