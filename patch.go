@@ -30,7 +30,7 @@ func PatchVersion(input pkg.Package, inputRaw string) (result string, err error)
 
 	versions := buff.String()
 
-	rawData := strings.Split(inputRaw, "version")
+	rawData := strings.Split(inputRaw, "version(")
 	beginning := strings.TrimRight(strings.Split(rawData[0], "url")[0], " ")
 	end := strings.SplitN(rawData[len(rawData)-1], "\n", 2)
 	result = beginning + fmt.Sprintf("    url      = \"%s\"\n\n", input.URL) + versions + end[1]
