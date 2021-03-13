@@ -56,3 +56,19 @@ func (t *Token) IsDependency() bool {
 func (t *Token) IsFunction() bool {
 	return strings.ToLower(t.Data) == "def"
 }
+
+// IsBranch returns if the current token defines a branch keyword.
+func (t *Token) IsBranch() bool {
+	return strings.HasPrefix(strings.ToLower(t.Data), "branch")
+}
+
+// IsBoolean returns if the current token is a boolean.
+func (t *Token) IsBoolean() bool {
+	return strings.HasPrefix(strings.ToLower(t.Data), "true") ||
+		strings.HasPrefix(strings.ToLower(t.Data), "false")
+}
+
+// IsSubmodule returns if the current token is a submodule keyword.
+func (t *Token) IsSubmodule() bool {
+	return strings.HasPrefix(strings.ToLower(t.Data), "submodules")
+}

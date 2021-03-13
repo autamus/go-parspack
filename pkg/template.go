@@ -23,5 +23,5 @@ class {{.Name}}({{.PackageType}}):
 // VersionTemplate is the defining template for how versions are
 // written to generate an encoded spack package.
 var VersionTemplate = "" +
-	`{{range $_, $entry := .Versions}}    version('{{printVersion $entry}}', {{$entry.Checksum}}{{if $entry.URL}}, url='{{$entry.URL}}'{{end}})
+	`{{range $_, $entry := .Versions}}    version('{{printVersion $entry}}'{{if $entry.Checksum}}, {{$entry.Checksum}}{{end}}{{if $entry.Branch}}, branch='{{$entry.Branch}}'{{end}}{{if $entry.Submodules}}, submodules={{$entry.Submodules}}{{end}}{{if $entry.URL}}, url='{{$entry.URL}}'{{end}})
 {{end}}`

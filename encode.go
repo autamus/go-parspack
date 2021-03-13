@@ -13,7 +13,11 @@ import (
 func Encode(input pkg.Package) (result string, err error) {
 	t, err := template.New("spec").Funcs(template.FuncMap{
 		"printVersion": func(input pkg.Version) string {
-			return strings.Join(input.Value, ".")
+			result := strings.Join(input.Value, ".")
+			if result == "N/A" {
+				return input.Tag
+			}
+			return result
 		},
 	}).Parse(pkg.PkgTemplate)
 	if err != nil {

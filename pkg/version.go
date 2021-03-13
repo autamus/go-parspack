@@ -2,15 +2,19 @@ package pkg
 
 import (
 	"sort"
+	"strings"
 
 	"github.com/alecbcs/cuppa/version"
 )
 
 // Version is the internal struct representation of the Spack Package Version
 type Version struct {
-	Value    version.Version
-	Checksum string
-	URL      string
+	Value      version.Version
+	Checksum   string
+	URL        string
+	Tag        string
+	Branch     string
+	Submodules string
 }
 
 // AddVersion appends a new version to the package struct if it doesn't already
@@ -18,7 +22,8 @@ type Version struct {
 func (p *Package) AddVersion(input Version) {
 	if !p.containsVersion(input) {
 		p.Versions = append(p.Versions, input)
-		if p.LatestVersion.Value == nil || p.LatestVersion.Compare(input) > 0 {
+		if strings.Join(input.Value, "") != "N/A" &&
+			(p.LatestVersion.Value == nil || p.LatestVersion.Compare(input) > 0) {
 			p.LatestVersion = input
 		}
 

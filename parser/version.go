@@ -19,6 +19,9 @@ func (p *Parser) ParseVersion() (result pkg.Version, err error) {
 	noprefix := strings.TrimPrefix(strings.ToLower(token.Data), "version('")
 	value := strings.TrimSuffix(noprefix, "',")
 	result.Value = version.NewVersion(value)
+	if strings.Join(result.Value, "") == "N/A" {
+		result.Tag = value
+	}
 
 	end := false
 	for !end {
@@ -42,6 +45,18 @@ func (p *Parser) ParseVersion() (result pkg.Version, err error) {
 			break
 		case token.IsURL():
 			result.URL, err = p.ParseURL()
+			if err != nil {
+				return result, err
+			}
+			break
+		case token.IsBranch():
+			result.Branch, err = p.ParseBranch()
+			if err != nil {
+				return result, err
+			}
+			break
+		case token.IsSubmodule():
+			result.Submodules, err = p.ParseSubmodule()
 			if err != nil {
 				return result, err
 			}
