@@ -34,7 +34,7 @@ func (t *Token) IsHomepage() bool {
 
 // IsURL returns if the current token begins with a valid URL header.
 func (t *Token) IsURL() bool {
-	return strings.HasPrefix(strings.ToLower(t.Data), "url")
+	return strings.HasPrefix(t.Data, "url")
 }
 
 //IsChecksum returns uf the current token begins with a valid checksum header.
@@ -44,7 +44,7 @@ func (t *Token) IsChecksum() bool {
 
 // IsVersion returns if the current token begins with a valid version header.
 func (t *Token) IsVersion() bool {
-	return strings.HasPrefix(strings.ToLower(t.Data), "version(")
+	return strings.HasPrefix(t.Data, "version(")
 }
 
 // IsDependency returns if the current token begins with a valid version header.
@@ -71,4 +71,9 @@ func (t *Token) IsBoolean() bool {
 // IsSubmodule returns if the current token is a submodule keyword.
 func (t *Token) IsSubmodule() bool {
 	return strings.HasPrefix(strings.ToLower(t.Data), "submodules")
+}
+
+// IsExpand returns if the current token is an expand keyword.
+func (t *Token) IsExpand() bool {
+	return strings.HasPrefix(strings.ToLower(t.Data), "expand")
 }

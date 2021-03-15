@@ -32,13 +32,14 @@ func PatchVersion(input pkg.Package, inputRaw string) (result string, err error)
 	versions := buff.String()
 
 	urlExp := regexp.MustCompile(`url\s*=.*\n`)
-	versionExp := regexp.MustCompile(`version\([^\)]*\)`)
+	versionExp := regexp.MustCompile(`\s+version\([^\)]*\)`)
 
 	rawData := versionExp.Split(inputRaw, -1)
 	rawUrl := urlExp.Split(rawData[0], 2)
 	beginning := strings.TrimRight(rawUrl[0], " ")
 	end := strings.SplitN(rawData[len(rawData)-1], "\n", 2)
-	result = beginning + fmt.Sprintf("    url      = \"%s\"\n", input.URL) + strings.TrimSuffix(rawUrl[1], "    ") + versions + end[1]
+	result = beginning + fmt.Sprintf("    url      = \"%s\"\n", input.URL) + strings.TrimSuffix(strings.TrimSuffix(rawUrl[1], "    "), "\n") +
+		"\n" + versions + end[1]
 
 	return result, nil
 }

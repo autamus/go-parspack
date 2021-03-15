@@ -30,8 +30,19 @@ func (p *Parser) ParseClass() (err error) {
 		token := p.scnr.Peak()
 
 		switch {
+		// Skip line when comment seen.
+		case strings.HasPrefix(token.Data, "#"):
+			err = p.scnr.NextLine()
+			if err != nil {
+				break
+			}
+			continue
+
 		case strings.HasPrefix(token.Data, `"""`):
 			p.result.Description, err = p.ParseString()
+
+		case token.IsString():
+			_, err = p.ParseString()
 
 		case token.IsHomepage():
 			p.result.Homepage, err = p.ParseHomepage()

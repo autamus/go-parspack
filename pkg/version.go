@@ -15,6 +15,7 @@ type Version struct {
 	Tag        string
 	Branch     string
 	Submodules string
+	Expand     string
 }
 
 // AddVersion appends a new version to the package struct if it doesn't already

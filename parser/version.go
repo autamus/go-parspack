@@ -61,6 +61,12 @@ func (p *Parser) ParseVersion() (result pkg.Version, err error) {
 				return result, err
 			}
 			break
+		case token.IsExpand():
+			result.Expand, err = p.ParseExpand()
+			if err != nil {
+				return result, err
+			}
+			break
 		}
 	}
 
