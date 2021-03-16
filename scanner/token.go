@@ -1,6 +1,9 @@
 package scanner
 
-import "strings"
+import (
+	"regexp"
+	"strings"
+)
 
 // Token is the structure containing a scanned token.
 type Token struct {
@@ -14,12 +17,8 @@ func (t *Token) IsComment() bool {
 
 // IsString returns if the current token begins a string.
 func (t *Token) IsString() bool {
-	return strings.HasPrefix(t.Data, `"""`) ||
-		strings.HasPrefix(t.Data, `"`) ||
-		strings.HasPrefix(t.Data, `'`) ||
-		strings.HasSuffix(t.Data, `"""`) ||
-		strings.HasSuffix(t.Data, `"`) ||
-		strings.HasSuffix(t.Data, `'`)
+	strTest := regexp.MustCompile(`(^""".*$)|(^".*$)|(^'.*$)|(^[^"""]*"""[,|\)]*$)|(^[^"]*"[,|\)]*$)|(^[^']*'[,|\)]*$)`)
+	return strTest.MatchString(t.Data)
 }
 
 // IsClass returns if the current token is begins a class definition.

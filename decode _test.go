@@ -18,7 +18,6 @@ func TestDecode(t *testing.T) {
 
 	from spack import *
 
-
 	class Beast2(Package):
 		"""BEAST is a cross-platform program for Bayesian inference using MCMC
 		of molecular sequences. It is entirely orientated towards rooted,
