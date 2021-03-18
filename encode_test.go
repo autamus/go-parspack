@@ -3,7 +3,7 @@ package parspack
 import (
 	"testing"
 
-	"github.com/alecbcs/cuppa/version"
+	"github.com/DataDrake/cuppa/version"
 	"github.com/autamus/go-parspack/pkg"
 )
 

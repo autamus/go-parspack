@@ -4,7 +4,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/alecbcs/cuppa/version"
+	"github.com/DataDrake/cuppa/version"
 )
 
 // Version is the internal struct representation of the Spack Package Version
