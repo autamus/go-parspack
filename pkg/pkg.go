@@ -9,6 +9,7 @@ type Package struct {
 	BlockComment      string
 	Homepage          string
 	URL               string
+	GitURL            string
 	PackageType       string
 	Dependencies      []string
 	LatestVersion     Version

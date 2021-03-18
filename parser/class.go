@@ -50,6 +50,9 @@ func (p *Parser) ParseClass() (err error) {
 		case token.IsURL():
 			p.result.URL, err = p.ParseURL()
 
+		case token.IsGitURL():
+			p.result.GitURL, err = p.ParseGitURL()
+
 		case token.IsVersion():
 			version, err := p.ParseVersion()
 			if err != nil {

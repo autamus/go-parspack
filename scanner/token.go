@@ -36,6 +36,11 @@ func (t *Token) IsURL() bool {
 	return strings.HasPrefix(t.Data, "url")
 }
 
+// IsGitURL returns if the current token begins with a valid GitURL header.
+func (t *Token) IsGitURL() bool {
+	return strings.HasPrefix(t.Data, "git")
+}
+
 //IsChecksum returns uf the current token begins with a valid checksum header.
 func (t *Token) IsChecksum() bool {
 	return strings.HasPrefix(strings.ToLower(t.Data), "sha")
