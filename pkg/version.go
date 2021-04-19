@@ -18,7 +18,7 @@ type Version struct {
 	Expand     string
 }
 
-var IsAlphabetic = regexp.MustCompile(`^[a-zA-Z]+$`).MatchString
+var IsAlphabetic = regexp.MustCompile(`^[a-zA-Z/]+$`).MatchString
 
 // AddVersion appends a new version to the package struct if it doesn't already
 // exist and sets the latest version to the input version if it is now the latest.
