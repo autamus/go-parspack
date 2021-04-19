@@ -41,6 +41,13 @@ func (p *Parser) ParseClass() (err error) {
 		case strings.HasPrefix(token.Data, `"""`):
 			p.result.Description, err = p.ParseString()
 
+		case token.IsBracket():
+			err = p.ParseBracket()
+			if err != nil {
+				return err
+			}
+			continue
+
 		case token.IsString():
 			_, err = p.ParseString()
 

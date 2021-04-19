@@ -21,6 +21,11 @@ func (t *Token) IsString() bool {
 	return strTest.MatchString(t.Data)
 }
 
+// IsBracket returns if the current token begins a bracketed set
+func (t *Token) IsBracket() bool {
+	return strings.HasPrefix(t.Data, "[") || strings.HasSuffix(t.Data, "]")
+}
+
 // IsClass returns if the current token is begins a class definition.
 func (t *Token) IsClass() bool {
 	return strings.ToLower(t.Data) == "class"
