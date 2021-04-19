@@ -32,13 +32,13 @@ func (p *Parser) ParseString() (result string, err error) {
 
 func trimStringPrefix(token string) string {
 	return strings.TrimLeftFunc(token, func(input rune) bool {
-		return input == '"' || input == '`' || input == '\'' || input == '('
+		return input == '"' || input == '`' || input == '\'' || input == '(' || input == '['
 	})
 }
 
 func trimStringSuffix(token string) string {
 	return strings.TrimRightFunc(token, func(input rune) bool {
-		return input == '"' || input == '`' || input == '\'' || input == ',' || input == ')'
+		return input == '"' || input == '`' || input == '\'' || input == ',' || input == ')' || input == ']'
 	})
 }
 
