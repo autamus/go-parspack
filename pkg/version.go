@@ -1,8 +1,8 @@
 package pkg
 
 import (
+	"regexp"
 	"sort"
-	"strings"
 
 	"github.com/DataDrake/cuppa/version"
 )
@@ -18,12 +18,14 @@ type Version struct {
 	Expand     string
 }
 
+var IsAlphabetic = regexp.MustCompile(`^[a-zA-Z]+$`).MatchString
+
 // AddVersion appends a new version to the package struct if it doesn't already
 // exist and sets the latest version to the input version if it is now the latest.
 func (p *Package) AddVersion(input Version) {
 	if !p.containsVersion(input) {
 		p.Versions = append(p.Versions, input)
-		if strings.Join(input.Value, "") != "N/A" &&
+		if !IsAlphabetic(input.Value.String()) &&
 			(p.LatestVersion.Value == nil || p.LatestVersion.Compare(input) > 0) {
 			p.LatestVersion = input
 		}

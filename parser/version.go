@@ -19,9 +19,6 @@ func (p *Parser) ParseVersion() (result pkg.Version, err error) {
 	noprefix := strings.TrimPrefix(strings.ToLower(token.Data), "version('")
 	value := strings.TrimSuffix(noprefix, "',")
 	result.Value = version.NewVersion(value)
-	if strings.Join(result.Value, "") == "N/A" {
-		result.Tag = value
-	}
 
 	end := false
 	for !end {

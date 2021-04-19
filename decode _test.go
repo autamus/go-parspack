@@ -29,7 +29,7 @@ func TestDecode(t *testing.T) {
 		homepage = "http://beast2.org/"
 		url      = "https://github.com/CompEvol/beast2/releases/download/v2.4.6/BEAST.v2.4.6.Linux.tgz"
 
-        version('main', branch='main', submodules=True)
+        version('master', branch='main', submodules=True)
 		version('2.5.2', sha256='2feb2281b4f7cf8f7de1a62de50f52a8678ed0767fc72f2322e77dde9b8cd45f')
 		version('2.4.6', sha256='84029c5680cc22f95bef644824130090f5f12d3d7f48d45cb4efc8e1d6b75e93', url='https://github.com/CompEvol/beast2/releases/download/v2.4.6/BEAST.v2.4.6.Linux.tgz')
 
@@ -60,7 +60,7 @@ func TestDecode(t *testing.T) {
 		Description: `BEAST is a cross-platform program for Bayesian inference using MCMC of molecular sequences. It is entirely orientated towards rooted, time-measured phylogenies inferred using strict or relaxed molecular clock models. It can be used as a method of reconstructing phylogenies but is also a framework for testing evolutionary hypotheses without conditioning on a single tree topology.`,
 		Homepage:    "http://beast2.org/",
 		URL:         "https://github.com/CompEvol/beast2/releases/download/v2.4.6/BEAST.v2.4.6.Linux.tgz",
-		Versions: []pkg.Version{{Value: version.NewVersion("master"), Tag: "master", Submodules: "True"}, {Value: version.NewVersion("2.5.2"), Checksum: "sha256='2feb2281b4f7cf8f7de1a62de50f52a8678ed0767fc72f2322e77dde9b8cd45f'"},
+		Versions: []pkg.Version{{Value: version.NewVersion("master"), Tag: "main", Submodules: "True"}, {Value: version.NewVersion("2.5.2"), Checksum: "sha256='2feb2281b4f7cf8f7de1a62de50f52a8678ed0767fc72f2322e77dde9b8cd45f'"},
 			{Value: version.NewVersion("2.4.6"), Checksum: "sha256='84029c5680cc22f95bef644824130090f5f12d3d7f48d45cb4efc8e1d6b75e93'", URL: "https://github.com/CompEvol/beast2/releases/download/v2.4.6/BEAST.v2.4.6.Linux.tgz"}},
 		LatestVersion: pkg.Version{Value: version.NewVersion("2.5.2"), Checksum: "sha256='2feb2281b4f7cf8f7de1a62de50f52a8678ed0767fc72f2322e77dde9b8cd45f'"},
 		Dependencies:  []string{"java"},
@@ -120,6 +120,8 @@ func TestDecode(t *testing.T) {
 	}
 	if result.LatestVersion.Compare(expected.LatestVersion) != 0 {
 		t.Error(errors.New("result package LatestVersion doesn't match expected"))
+		t.Logf("  Result: %s\n", result.LatestVersion.Value.String())
+		t.Logf("Expected: %s\n", expected.LatestVersion.Value.String())
 	}
 	if len(result.Dependencies) != len(expected.Dependencies) {
 		t.Error(errors.New("result package Dependencies don't match expected"))
