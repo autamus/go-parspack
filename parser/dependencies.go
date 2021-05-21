@@ -5,15 +5,6 @@ import (
 	"strings"
 )
 
-func versend(input rune) bool {
-	for _, c := range []rune{'@', '~'} {
-		if input == c {
-			return true
-		}
-	}
-	return false
-}
-
 // ParseDependency returns a list of strings of dependency packages.
 func (p *Parser) ParseDependency() (result string, err error) {
 	token := p.scnr.Peak()
@@ -54,4 +45,14 @@ func (p *Parser) ParseDependency() (result string, err error) {
 	}
 
 	return result, nil
+}
+
+// versend returns true at the end of the name of a dependency
+func versend(input rune) bool {
+	for _, c := range []rune{'@', '~', '+'} {
+		if input == c {
+			return true
+		}
+	}
+	return false
 }
