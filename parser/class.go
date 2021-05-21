@@ -68,7 +68,11 @@ func (p *Parser) ParseClass() (err error) {
 			p.result.AddVersion(version)
 
 		case token.IsDependency():
-			p.result.Dependencies, err = p.ParseDependencies()
+			dependency, err := p.ParseDependency()
+			if err != nil {
+				return err
+			}
+			p.result.Dependencies = append(p.result.Dependencies, dependency)
 
 		case token.IsFunction():
 			result, err := p.ParseFunction()

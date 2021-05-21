@@ -86,7 +86,7 @@ class Picard(Package):
 		t.Fatal(err)
 	}
 
-	output, err := PatchVersion(result, spackPackage)
+	output, _ := PatchVersion(result, spackPackage)
 	if output != spackPackage {
 		t.Error(output)
 		t.Error(spackPackage)
@@ -158,7 +158,7 @@ class Htslib(AutotoolsPackage):
 		t.Fatal(err)
 	}
 
-	output, err := PatchVersion(result, spackPackage)
+	output, _ := PatchVersion(result, spackPackage)
 	if output != spackPackage {
 		t.Error(output)
 		t.Error(spackPackage)

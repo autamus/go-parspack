@@ -5,24 +5,47 @@ import (
 	"strings"
 )
 
-// ParseDependencies returns a list of strings of dependency packages.
-func (p *Parser) ParseDependencies() (result []string, err error) {
+func versend(input rune) bool {
+	for _, c := range []rune{'@', '~'} {
+		if input == c {
+			return true
+		}
+	}
+	return false
+}
+
+// ParseDependency returns a list of strings of dependency packages.
+func (p *Parser) ParseDependency() (result string, err error) {
 	token := p.scnr.Peak()
 	if !token.IsDependency() {
 		return result, errors.New("called ParseDependencies without the beginning token being a depends_on declaration")
 	}
 
-	token.Data = strings.TrimLeft(strings.ToLower(token.Data), "depends_on(")
+	// Remember if the dependency was only one token wide.
+	hadSuffix := false
+	if strings.HasSuffix(token.Data, ")") {
+		hadSuffix = true
+	}
+
+	// Trim left and right sides of dependency token
+	token.Data = strings.TrimRight(strings.TrimLeft(strings.ToLower(token.Data), "deps_on("), ")")
+	// Save the modified token back to the parser to use with ParseString
+	p.scnr.SetToken(token.Data)
+	result, err = p.ParseString()
+	if err != nil {
+		return result, err
+	}
+
+	// Record the end of the depedency name versus version/variant info.
+	end := strings.IndexFunc(result, versend)
+	if end > 0 {
+		result = result[:end]
+	}
 
 	for {
-		if strings.HasSuffix(token.Data, ")") {
-			data := strings.TrimRight(token.Data, ")")
-			result = append(result, trimString(data))
+		if strings.HasSuffix(token.Data, ")") || hadSuffix {
 			break
 		}
-
-		data := strings.TrimRight(token.Data, ",")
-		result = append(result, trimString(data))
 
 		token, err = p.scnr.Next()
 		if err != nil {

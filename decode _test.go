@@ -34,7 +34,7 @@ func TestDecode(t *testing.T) {
 		version('2.5.2', sha256='2feb2281b4f7cf8f7de1a62de50f52a8678ed0767fc72f2322e77dde9b8cd45f')
 		version('2.4.6', sha256='84029c5680cc22f95bef644824130090f5f12d3d7f48d45cb4efc8e1d6b75e93', url='https://github.com/CompEvol/beast2/releases/download/v2.4.6/BEAST.v2.4.6.Linux.tgz')
 
-		depends_on('java')
+		depends_on('java@1.1')
 
 		def setup_run_environment(self, env):
 			env.set('BEAST', self.prefix)
@@ -125,10 +125,14 @@ func TestDecode(t *testing.T) {
 		t.Logf("Expected: %s\n", expected.LatestVersion.Value.String())
 	}
 	if len(result.Dependencies) != len(expected.Dependencies) {
+		t.Logf("  Result: %s\n", result.Dependencies)
+		t.Logf("Expected: %s\n", expected.Dependencies)
 		t.Error(errors.New("result package Dependencies don't match expected"))
 	} else {
 		for i := range expected.Dependencies {
 			if result.Dependencies[i] != expected.Dependencies[i] {
+				t.Logf("  Result: %s\n", result.Dependencies[i])
+				t.Logf("Expected: %s\n", expected.Dependencies[i])
 				t.Error(errors.New("result package Dependencies don't match expected"))
 			}
 		}

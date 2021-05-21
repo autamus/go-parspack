@@ -39,31 +39,26 @@ func (p *Parser) ParseVersion() (result pkg.Version, err error) {
 		case token.IsChecksum():
 			// Parse Checksum
 			result.Checksum = token.Data
-			break
 		case token.IsURL():
 			result.URL, err = p.ParseURL()
 			if err != nil {
 				return result, err
 			}
-			break
 		case token.IsBranch():
 			result.Branch, err = p.ParseBranch()
 			if err != nil {
 				return result, err
 			}
-			break
 		case token.IsSubmodule():
 			result.Submodules, err = p.ParseSubmodule()
 			if err != nil {
 				return result, err
 			}
-			break
 		case token.IsExpand():
 			result.Expand, err = p.ParseExpand()
 			if err != nil {
 				return result, err
 			}
-			break
 		}
 	}
 
