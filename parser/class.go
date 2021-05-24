@@ -7,6 +7,11 @@ import (
 
 // ParseClass handles the specific parsing of a package class.
 func (p *Parser) ParseClass() (err error) {
+	// Set one time switches
+	URLSet := false
+	GitURLSet := false
+	HomepageSet := false
+
 	token := p.scnr.Peak()
 	if !token.IsClass() {
 		return errors.New("called ParseClass without the beginning token being a class defintion")
@@ -51,14 +56,17 @@ func (p *Parser) ParseClass() (err error) {
 		case token.IsString():
 			_, err = p.ParseString()
 
-		case token.IsHomepage():
+		case token.IsHomepage() && !HomepageSet:
 			p.result.Homepage, err = p.ParseHomepage()
+			HomepageSet = true
 
-		case token.IsURL():
+		case token.IsURL() && !URLSet:
 			p.result.URL, err = p.ParseURL()
+			URLSet = true
 
-		case token.IsGitURL():
+		case token.IsGitURL() && !GitURLSet:
 			p.result.GitURL, err = p.ParseGitURL()
+			GitURLSet = true
 
 		case token.IsVersion():
 			version, err := p.ParseVersion()
