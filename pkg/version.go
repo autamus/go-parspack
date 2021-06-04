@@ -3,6 +3,7 @@ package pkg
 import (
 	"regexp"
 	"sort"
+	"strings"
 
 	"github.com/DataDrake/cuppa/version"
 )
@@ -24,12 +25,25 @@ var IsAlphabetic = regexp.MustCompile(`^[a-zA-Z/]+$`).MatchString
 // exist and sets the latest version to the input version if it is now the latest.
 func (p *Package) AddVersion(input Version) {
 	if !p.containsVersion(input) {
+		// Check filetype ending of URL to determine if expand = True/False
+		url := input.URL
+		if url == "" {
+			url = p.URL
+		}
+		if input.Expand == "" &&
+			!strings.HasSuffix(url, ".tar.gz") &&
+			!strings.HasSuffix(url, ".tar.bz2") &&
+			!strings.HasSuffix(url, ".tgz") &&
+			!strings.HasSuffix(url, ".zip") {
+			input.Expand = "False"
+		}
 		p.Versions = append(p.Versions, input)
 		if !IsAlphabetic(input.Value.String()) &&
 			(p.LatestVersion.Value == nil || p.LatestVersion.Compare(input) > 0) {
 			p.LatestVersion = input
 		}
 
+		// Sort versions from high to low.
 		sort.Slice(p.Versions[:], func(i, j int) bool {
 			return p.Versions[i].Compare(p.Versions[j]) < 0
 		})

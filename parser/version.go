@@ -10,6 +10,8 @@ import (
 
 // ParseVersion returns the value of a version tuple.
 func (p *Parser) ParseVersion() (result pkg.Version, err error) {
+	// Watch for the end of the version.
+	end := false
 	token := p.scnr.Peak()
 	if !token.IsVersion() {
 		return result, errors.New("called ParseVersion without the beginning token being a version declaration")
@@ -18,9 +20,17 @@ func (p *Parser) ParseVersion() (result pkg.Version, err error) {
 	// Parse Version Value
 	noprefix := strings.TrimPrefix(strings.ToLower(token.Data), "version('")
 	value := strings.TrimSuffix(noprefix, "',")
+	if strings.HasSuffix(value, ")") {
+		value = strings.TrimSuffix(noprefix, "')")
+		end = true
+	}
 	result.Value = version.NewVersion(value)
 
-	end := false
+	// Check for N/A version value
+	if result.Value.String() == "N/A" {
+		result.Value = []string{value}
+	}
+
 	for !end {
 		token, err = p.scnr.Next()
 		if err != nil {

@@ -43,7 +43,7 @@ class Picard(Package):
     version('2.9.0', sha256='9a57f6bd9086ea0f5f1a6d9d819459854cb883bb8093795c916538ed9dd5de64', expand=False)
     version('2.8.3', sha256='97a4b6c8927c8cb5f3450630c9b39bf210ced8c271f198119118ce1c24b8b0f6', expand=False)
     version('2.6.0', sha256='671d9e86e6bf0c28ee007aea55d07e2456ae3a57016491b50aab0fd2fd0e493b', expand=False)
-    version('1.140', sha256='0d27287217413db6b846284c617d502eaa578662dcb054a7017083eab9c54438')
+    version('1.140', sha256='0d27287217413db6b846284c617d502eaa578662dcb054a7017083eab9c54438', expand=True)
 
     depends_on('java@8:', type='run')
 
@@ -108,6 +108,8 @@ class Htslib(AutotoolsPackage):
     homepage = "https://github.com/samtools/htslib"
     url      = "https://github.com/samtools/htslib/releases/download/1.10.2/htslib-1.10.2.tar.bz2"
 
+    version('develop', submodules=True)
+    version('master')
     version('1.11', sha256='cffadd9baa6fce27b8fe0b01a462b489f06a5433dfe92121f667f40f632538d7')
     version('1.10.2', sha256='e3b543de2f71723830a1e0472cf5489ec27d0fbeb46b1103e14a11b7177d1939')
     version('1.9', sha256='e04b877057e8b3b8425d957f057b42f0e8509173621d3eccaedd0da607d9929a')
