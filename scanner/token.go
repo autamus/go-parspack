@@ -86,3 +86,8 @@ func (t *Token) IsSubmodule() bool {
 func (t *Token) IsExpand() bool {
 	return strings.HasPrefix(strings.ToLower(t.Data), "expand")
 }
+
+// IsCommit returns if the current token is an commit keyword.
+func (t *Token) IsCommit() bool {
+	return strings.HasPrefix(strings.ToLower(t.Data), "commit")
+}

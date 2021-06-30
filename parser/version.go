@@ -69,6 +69,11 @@ func (p *Parser) ParseVersion() (result pkg.Version, err error) {
 			if err != nil {
 				return result, err
 			}
+		case token.IsCommit():
+			result.Commit, err = p.ParseCommit()
+			if err != nil {
+				return result, err
+			}
 		}
 	}
 

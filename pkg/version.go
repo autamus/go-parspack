@@ -12,6 +12,7 @@ import (
 type Version struct {
 	Value      version.Version
 	Checksum   string
+	Commit     string
 	URL        string
 	Tag        string
 	Branch     string
