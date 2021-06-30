@@ -30,7 +30,7 @@ func (p *Package) AddVersion(input Version) {
 		if url == "" {
 			url = p.URL
 		}
-		if input.Expand == "" &&
+		if input.Expand == "" && input.URL != "" &&
 			!strings.HasSuffix(url, ".tar.gz") &&
 			!strings.HasSuffix(url, ".tar.bz2") &&
 			!strings.HasSuffix(url, ".tgz") &&
