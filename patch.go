@@ -42,8 +42,11 @@ func PatchVersion(input pkg.Package, inputRaw string) (result string, err error)
 	if len(rawUrl) > 1 {
 		urlSuffix = strings.TrimPrefix(strings.TrimSuffix(strings.TrimSuffix(rawUrl[1], "    "), "\n"), "\n")
 	}
-	result = beginning + fmt.Sprintf("    url      = \"%s\"\n", input.URL) + urlSuffix +
-		"\n" + versions + end[1]
+	result = strings.TrimSuffix(beginning, "\n") + "\n"
+	if len(input.URL) > 0 {
+		result += fmt.Sprintf("    url      = \"%s\"\n", input.URL)
+	}
+	result += urlSuffix + "\n" + versions + end[1]
 
 	return result, nil
 }
