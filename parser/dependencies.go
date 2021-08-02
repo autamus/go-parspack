@@ -22,9 +22,11 @@ func (p *Parser) ParseDependency() (result string, err error) {
 	token.Data = strings.TrimRight(strings.TrimLeft(strings.ToLower(token.Data), "deps_on("), ")")
 	// Save the modified token back to the parser to use with ParseString
 	p.scnr.SetToken(token.Data)
-	result, err = p.ParseString()
-	if err != nil {
-		return result, err
+	if token.IsString() {
+		result, err = p.ParseString()
+		if err != nil {
+			return result, err
+		}
 	}
 
 	// Record the end of the depedency name versus version/variant info.

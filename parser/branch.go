@@ -30,5 +30,8 @@ func (p *Parser) ParseBranch() (result string, err error) {
 			return result, err
 		}
 	}
-	return p.ParseString()
+	if token.IsString() {
+		return p.ParseString()
+	}
+	return result, nil
 }

@@ -5,11 +5,11 @@ import (
 	"strings"
 )
 
-// ParseString parses and returns the full contents of a string.
+// ParseBracket parses and returns the full contents of a string.
 func (p *Parser) ParseBracket() (err error) {
 	token := p.scnr.Peak()
 	if !token.IsBracket() {
-		return errors.New("called ParseString without the beginning token being a bracket start")
+		return errors.New("called ParseBracket without the beginning token being a bracket start")
 	}
 
 	token.Data = trimBracketPrefix(token.Data)

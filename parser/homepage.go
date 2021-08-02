@@ -22,5 +22,8 @@ func (p *Parser) ParseHomepage() (result string, err error) {
 	if err != nil {
 		return result, err
 	}
-	return p.ParseString()
+	if token.IsString() {
+		return p.ParseString()
+	}
+	return result, nil
 }

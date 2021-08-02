@@ -30,7 +30,10 @@ func (p *Parser) ParseURL() (result string, err error) {
 			return result, err
 		}
 	}
-	return p.ParseString()
+	if token.IsString() {
+		return p.ParseString()
+	}
+	return result, nil
 }
 
 // ParseGitURL returns the value of the url variable.
@@ -58,5 +61,8 @@ func (p *Parser) ParseGitURL() (result string, err error) {
 			return result, err
 		}
 	}
-	return p.ParseString()
+	if token.IsString() {
+		return p.ParseString()
+	}
+	return result, nil
 }
