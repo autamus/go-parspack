@@ -30,23 +30,16 @@ func PatchVersion(input pkg.Package, inputRaw string) (result string, err error)
 	}
 
 	versions := buff.String()
+	urlExp := regexp.MustCompile(`\n    url\s*=.*".*"\n`)
+	versionExp := regexp.MustCompile(`\n(    version\([^\)]*\)\n)+`)
 
-	urlExp := regexp.MustCompile(`url\s*=.*`)
-	versionExp := regexp.MustCompile(`\s+version\([^\)]*\)`)
-
-	rawData := versionExp.Split(inputRaw, -1)
-	rawUrl := urlExp.Split(rawData[0], 2)
-	beginning := strings.TrimRight(rawUrl[0], " ")
-	end := strings.SplitN(rawData[len(rawData)-1], "\n", 2)
-	urlSuffix := ""
-	if len(rawUrl) > 1 {
-		urlSuffix = strings.TrimPrefix(strings.TrimSuffix(strings.TrimSuffix(rawUrl[1], "    "), "\n"), "\n")
+	if len(input.Versions) > 0 {
+		inputRaw = versionExp.ReplaceAllString(inputRaw, "\n"+versions)
 	}
-	result = strings.TrimSuffix(beginning, "\n") + "\n"
-	if len(input.URL) > 0 {
-		result += fmt.Sprintf("    url      = \"%s\"\n", input.URL)
-	}
-	result += urlSuffix + "\n" + versions + end[1]
 
-	return result, nil
+	if input.URL != "" {
+		inputRaw = urlExp.ReplaceAllString(inputRaw, fmt.Sprintf("\n    url      = \"%s\"\n", input.URL))
+	}
+
+	return inputRaw, nil
 }
