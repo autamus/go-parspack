@@ -63,7 +63,7 @@ func (t *Token) IsDependency() bool {
 
 // IsFunction returns if the current token begins a function.
 func (t *Token) IsFunction() bool {
-	return strings.ToLower(t.Data) == "def"
+	return strings.ToLower(t.Data) == "def" || strings.ToLower(t.Data) == "for"
 }
 
 // IsBranch returns if the current token defines a branch keyword.
