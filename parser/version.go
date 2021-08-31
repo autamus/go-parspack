@@ -18,10 +18,15 @@ func (p *Parser) ParseVersion() (result pkg.Version, err error) {
 	}
 
 	// Parse Version Value
-	noprefix := strings.TrimPrefix(strings.ToLower(token.Data), "version('")
-	value := strings.TrimSuffix(noprefix, "',")
-	if strings.HasSuffix(value, ")") {
-		value = strings.TrimSuffix(noprefix, "')")
+	noprefix := strings.TrimPrefix(strings.ToLower(token.Data), "version(")
+	p.scnr.SetToken(noprefix)
+
+	value, err := p.ParseString()
+	if err != nil {
+		return result, err
+	}
+
+	if strings.HasSuffix(noprefix, ")") {
 		end = true
 	}
 	result.Value = version.NewVersion(value)

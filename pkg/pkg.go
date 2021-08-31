@@ -8,6 +8,7 @@ type Package struct {
 	Description       string
 	BlockComment      string
 	Homepage          string
+	Maintainers       []string
 	URL               string
 	GitURL            string
 	PackageType       string

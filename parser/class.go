@@ -64,6 +64,9 @@ func (p *Parser) ParseClass() (err error) {
 			p.result.URL, err = p.ParseURL()
 			URLSet = true
 
+		case token.IsMaintainers():
+			p.result.Maintainers, err = p.ParseMaintainers()
+
 		case token.IsGitURL() && !GitURLSet:
 			p.result.GitURL, err = p.ParseGitURL()
 			GitURLSet = true

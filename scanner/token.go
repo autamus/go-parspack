@@ -91,3 +91,14 @@ func (t *Token) IsExpand() bool {
 func (t *Token) IsCommit() bool {
 	return strings.HasPrefix(strings.ToLower(t.Data), "commit")
 }
+
+// IsMaintainers returns if the current token is an maintainers keyword.
+func (t *Token) IsMaintainers() bool {
+	return strings.HasPrefix(strings.ToLower(t.Data), "maintainers")
+}
+
+// IsList returns if the current token is an list declaration.
+func (t *Token) IsList() bool {
+	return strings.HasPrefix(strings.ToLower(t.Data), "[") ||
+		strings.HasSuffix(strings.ToLower(t.Data), "]")
+}
