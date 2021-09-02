@@ -19,7 +19,11 @@ func (p *Parser) ParseVersion() (result pkg.Version, err error) {
 
 	// Parse Version Value
 	noprefix := strings.TrimPrefix(strings.ToLower(token.Data), "version(")
-	p.scnr.SetToken(noprefix)
+	if noprefix != "" {
+		p.scnr.SetToken(noprefix)
+	} else {
+		p.scnr.Next()
+	}
 
 	value, err := p.ParseString()
 	if err != nil {
