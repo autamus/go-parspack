@@ -18,6 +18,7 @@ type Version struct {
 	Branch     string
 	Submodules string
 	Expand     string
+	Extension  string
 }
 
 var IsAlphabetic = regexp.MustCompile(`^[a-zA-Z/]+$`).MatchString

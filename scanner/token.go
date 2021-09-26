@@ -102,3 +102,13 @@ func (t *Token) IsList() bool {
 	return strings.HasPrefix(strings.ToLower(t.Data), "[") ||
 		strings.HasSuffix(strings.ToLower(t.Data), "]")
 }
+
+// IsExtension returns if the current token is an extension keyword.
+func (t *Token) IsExtension() bool {
+	return strings.HasPrefix(strings.ToLower(t.Data), "extension")
+}
+
+// IsTag returns if the current token is an tag keyword.
+func (t *Token) IsTag() bool {
+	return strings.HasPrefix(strings.ToLower(t.Data), "tag")
+}

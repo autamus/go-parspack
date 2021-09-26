@@ -83,6 +83,16 @@ func (p *Parser) ParseVersion() (result pkg.Version, err error) {
 			if err != nil {
 				return result, err
 			}
+		case token.IsExtension():
+			result.Extension, err = p.ParseExtension()
+			if err != nil {
+				return result, err
+			}
+		case token.IsTag():
+			result.Tag, err = p.ParseTag()
+			if err != nil {
+				return result, err
+			}
 		}
 	}
 

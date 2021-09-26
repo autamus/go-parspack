@@ -29,7 +29,7 @@ func PatchVersion(input pkg.Package, inputRaw string) (result string, err error)
 		return result, err
 	}
 
-	versions := buff.String()
+	versions := strings.TrimSuffix(buff.String(), "\n")
 	urlExp := regexp.MustCompile(`\n    url\s*=.*".*"\n`)
 	versionExp := regexp.MustCompile(`\n(    version\([^\)]*\)(\n|.)*)*(    version\([^\)]*\))+`)
 
